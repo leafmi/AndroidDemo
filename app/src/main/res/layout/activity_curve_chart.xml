@@ -10,8 +10,9 @@
     tools:context="com.leafmi.mi.androiddemo.activity.other.CurveChartActivity">
 
     <com.leafmi.mi.androiddemo.view.CurveChartView
+        android:id="@+id/curve_chart"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:background="#f0f"/>
+        android:layout_height="180dp"
+        android:background="@drawable/background_trafffic"/>
 
 </RelativeLayout>
