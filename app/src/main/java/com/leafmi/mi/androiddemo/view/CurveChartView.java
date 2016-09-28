@@ -7,12 +7,16 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathEffect;
-import android.graphics.Point;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+
+import com.leafmi.mi.androiddemo.R;
+import com.leafmi.mi.androiddemo.bean.other.Point;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,6 +53,7 @@ public class CurveChartView extends View {
     private Point[] xLinesPoints;
     private int monthDays;
     private float curveXDiffSize;
+    private Context mContext;
 
 
     public CurveChartView(Context context) {
@@ -63,14 +68,12 @@ public class CurveChartView extends View {
 
 
     public void init(Context context) {
+        this.mContext=context;
         WindowManager mManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         mManager.getDefaultDisplay().getMetrics(displayMetrics);
         density = displayMetrics.density;
         xShowText = getXShowText();
-        for (int i = 0; i < xShowText.size(); i++) {
-            Log.e("TAG", xShowText.get(i));
-        }
         initPaint();
     }
 
@@ -99,7 +102,7 @@ public class CurveChartView extends View {
         //点画笔
         pointPaint = new Paint();
         pointPaint.setAntiAlias(true);
-        pointPaint.setStyle(Paint.Style.STROKE);
+        pointPaint.setStyle(Paint.Style.FILL);
         pointPaint.setColor(Color.parseColor("#ffc800"));
 
         //曲线填充画笔
@@ -129,9 +132,23 @@ public class CurveChartView extends View {
         super.onDraw(canvas);
         drawYCoordinateLine(canvas);
         drawCurveChart(canvas);
-        if (null != mPoints && mPoints.length > 0) {
-            canvas.drawCircle(mPoints[mPoints.length - 1].x, mPoints[mPoints.length - 1].x, 4 * density, pointPaint);
+
+        pointPaint.setColor(Color.parseColor("#ffffff"));
+        for (int i = 0; i < xShowText.size(); i++) {
+            canvas.drawText(xShowText.get(i), mXTextPoints[i].x, mXTextPoints[i].y, textPaint);
+            canvas.drawCircle(xLinesPoints[i].x, xLinesPoints[i].y, 1 * density, pointPaint);
+
         }
+
+        pointPaint.setColor(Color.parseColor("#C4F60B"));
+        if (null != mPoints && mPoints.length > 0) {
+            canvas.drawCircle(mPoints[mPoints.length - 1].x, mPoints[mPoints.length - 1].y, 4 * density, pointPaint);
+            canvas.drawCircle(mPoints[mPoints.length - 1].x, areaSize * (areaCount - 1), 2 * density, pointPaint);
+        }
+//
+//        for (int i = 0; i < mPoints.length; i++) {
+//            canvas.drawCircle(mPoints[i].x, mPoints[i].y, 2 * density, pointPaint);
+//        }
     }
 
 
@@ -176,12 +193,6 @@ public class CurveChartView extends View {
                 }
             }
         }
-        for (int i = 0; i < xShowText.size(); i++) {
-            canvas.drawText(xShowText.get(i), mXTextPoints[i].x, mXTextPoints[i].y, textPaint);
-            canvas.drawCircle(xLinesPoints[i].x, xLinesPoints[i].y, 1 * density, textPaint);
-
-        }
-
     }
 
     private Path getLinesPath(int multiple) {
@@ -192,18 +203,18 @@ public class CurveChartView extends View {
         return linePath;
     }
 
-    private List<Integer> calculatepoitX(int dayCount) {
+    private List<Float> calculatepoitX(int dayCount) {
 
-        List<Integer> pointX = new ArrayList<>();
+        List<Float> pointX = new ArrayList<>();
         for (int i = 1; i < dayCount; i++) {
-            pointX.add((int) (dataStartXDiff + (i - 1) * curveXDiffSize));
+            pointX.add(dataStartXDiff + (i - 1) * curveXDiffSize);
         }
         return pointX;
     }
 
 
-    private List<Integer> calculatePointY(List<Long> listData) {
-        List<Integer> pointY = new ArrayList<>();
+    private List<Float> calculatePointY(List<Long> listData) {
+        List<Float> pointY = new ArrayList<>();
         if (listData.size() > 0) {
             Long aLong = listData.get(0);
             float heightByte = (float) ((areaSize * (areaCount - 2)) * 1.0 / aLong);
@@ -211,12 +222,12 @@ public class CurveChartView extends View {
             for (int i = 1; i < listData.size(); i++) {
                 float l = listData.get(i) * heightByte;
                 float v = areaSize * (areaCount - 1) - l;
-                pointY.add((int) v);
+                pointY.add(v);
             }
         }
 
         for (int i = 0; i < pointY.size(); i++) {
-            Log.e("Point", "calculatePointY: " + pointY.get(i) + "===========" + areaSize);
+            Log.e("Point", "calculatePointY: " + pointY.get(i) + "===========" + areaSize + "=======" + density);
         }
         return pointY;
     }
@@ -227,8 +238,8 @@ public class CurveChartView extends View {
      * @return
      */
     private Point[] calculatePoints(List<Long> listData) {
-        List<Integer> pointX = calculatepoitX(listData.size());
-        List<Integer> pointY = calculatePointY(listData);
+        List<Float> pointX = calculatepoitX(listData.size());
+        List<Float> pointY = calculatePointY(listData);
         if ((null != pointX || null != pointY) && pointX.size() == pointY.size()) {
             int size = pointX.size();
             mPoints = new Point[size];
@@ -251,16 +262,25 @@ public class CurveChartView extends View {
         Path curvePath = new Path();
         Path fillPath = new Path();
         if (null != mPoints && mPoints.length > 0) {
-            buildPath(curvePath, mPoints);
-            buildPath(fillPath, mPoints);
+            buildPath3(curvePath, mPoints);
+            buildPath3(fillPath, mPoints);
+
 
             fillPath.lineTo(mPoints[mPoints.length - 1].x, areaSize * 4 - 0);
             fillPath.lineTo(mPoints[0].x, areaSize * 4 - 0);
             fillPath.lineTo(mPoints[0].x, mPoints[0].y);
             fillPath.close();
-
             canvas.drawPath(curvePath, curveChartPaint);
             canvas.drawPath(fillPath, fillPaint);
+//
+//            canvas.save();
+//            canvas.clipPath(fillPath);
+////            Drawable drawable = mContext.getResources().getDrawable(mContext,R.drawable.fade_red);
+//            Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.fade_red);
+//            drawable.setBounds(0,0,mWidth,mHeight);
+//            drawable.draw(canvas);
+//            canvas.restore();
+//            fillPath.rewind();
         }
     }
 
@@ -285,6 +305,73 @@ public class CurveChartView extends View {
             float controlY = mPoints[i].y;
 
             path.quadTo(controlX, controlY, pointX, pointY);
+        }
+        path.quadTo(mPoints[pointSize - 1].x, mPoints[pointSize - 1].y, mPoints[pointSize - 1].x,
+                mPoints[pointSize - 1].y);
+    }
+
+
+    /**
+     * 三阶贝塞尔曲线 Path
+     *
+     * @param path
+     * @param mPoints
+     */
+    private void buildPath2(Path path, Point[] mPoints) {
+        //Important!
+        path.reset();
+
+        int pointSize = mPoints.length;
+        Point startPoint;
+        Point endPoint;
+        for (int i = 0; i < pointSize - 1; i++) {
+            startPoint = mPoints[i];
+            endPoint = mPoints[i + 1];
+            float centerX = (startPoint.x + endPoint.x) / 2;
+            float centerY = (startPoint.y + endPoint.y) / 2;
+            Point controlPoint1 = new Point();
+            Point controlPoint2 = new Point();
+
+            controlPoint1.y = centerY;
+            controlPoint1.x = centerX;
+
+            path.moveTo(startPoint.x, startPoint.y);
+            path.quadTo(controlPoint1.x, controlPoint1.y,  endPoint.x, endPoint.y);
+        }
+        path.quadTo(mPoints[pointSize - 1].x, mPoints[pointSize - 1].y, mPoints[pointSize - 1].x,
+                mPoints[pointSize - 1].y);
+    }
+
+
+    /**
+     * 三阶贝塞尔曲线 Path
+     *
+     * @param path
+     * @param mPoints
+     */
+    private void buildPath3(Path path, Point[] mPoints) {
+        //Important!
+        path.reset();
+
+        int pointSize = mPoints.length;
+        Point startPoint;
+        Point endPoint;
+        path.moveTo(mPoints[0].x, mPoints[0].y);
+        for (int i = 0; i < pointSize - 1; i++) {
+            startPoint = mPoints[i];
+            endPoint = mPoints[i + 1];
+            float centerX = (startPoint.x + endPoint.x) / 2;
+            Point controlPoint1 = new Point();
+            Point controlPoint2 = new Point();
+
+            controlPoint1.y = startPoint.y;
+            controlPoint1.x = centerX;
+
+            controlPoint2.y = endPoint.y;
+            controlPoint2.x = centerX;
+
+
+            path.cubicTo(controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, endPoint.x, endPoint.y);
         }
         path.quadTo(mPoints[pointSize - 1].x, mPoints[pointSize - 1].y, mPoints[pointSize - 1].x,
                 mPoints[pointSize - 1].y);

@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         listMina.add("Image");
         listMina.add("Animation");
         listMina.add("Other");
+        listMina.add("Flash");
 
         mListViewMian.setAdapter(new GeneralAdapter(this, listMina));
     }
@@ -53,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 3:
                         ActivityBuilder.toOtherActivity(MainActivity.this);
+                        break;
+                    case 4:
+                        ActivityBuilder.toFlashActivity(MainActivity.this);
                         break;
                 }
             }

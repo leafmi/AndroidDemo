@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.leafmi.mi.androiddemo">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,7 +18,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.other.OtherActivity" />
-        <activity android:name=".activity.other.CurveChartActivity"></activity>
+        <activity android:name=".activity.other.CurveChartActivity" />
+        <activity android:name=".activity.flash.FlashActivity" />
+        <activity android:name=".activity.network.NetWorkActivity"></activity>
     </application>
 
 </manifest>

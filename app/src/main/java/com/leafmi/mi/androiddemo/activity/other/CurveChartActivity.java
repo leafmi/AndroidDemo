@@ -101,7 +101,7 @@ public class CurveChartActivity extends AppCompatActivity {
         list.add(18954l);
         list.add(2215l);
         list.add(3695l);
-        list.add(3695l);
+        list.add(8652l);
         mCurveChart.setLitData(list);
     }
 }
