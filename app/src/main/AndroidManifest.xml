@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".LeafmiApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,7 +21,9 @@
         <activity android:name=".activity.other.OtherActivity" />
         <activity android:name=".activity.other.CurveChartActivity" />
         <activity android:name=".activity.flash.FlashActivity" />
-        <activity android:name=".activity.network.NetWorkActivity"></activity>
+        <activity android:name=".activity.network.NetWorkActivity" />
+        <activity android:name=".activity.network.OkHttpActivity" />
+        <activity android:name=".activity.network.RetorfitActivity"></activity>
     </application>
 
 </manifest>

@@ -2,13 +2,21 @@ package com.leafmi.mi.androiddemo.activity.network;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.leafmi.mi.androiddemo.R;
+import com.leafmi.mi.androiddemo.activity.ActivityBuilder;
+import com.leafmi.mi.androiddemo.adapter.GeneralAdapter;
 import com.leafmi.mi.androiddemo.bean.network.FunVideo;
 import com.leafmi.mi.androiddemo.utils.network.RetrofitHelper;
+import com.squareup.okhttp.internal.http.RealResponseBody;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,28 +26,43 @@ import retrofit2.Response;
 
 public class NetWorkActivity extends AppCompatActivity {
 
+    private List<String> listMina = new ArrayList<>();
+
+    private ListView mListViewMian;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_net_work);
-        getFunVideoData();
+
+        initView();
+        initData();
+        listener();
     }
 
-
-    private void getFunVideoData() {
-        RetrofitHelper.getDaniudFunVideoApi()
-                .getFunnyVideoCall("1", "10")
-                .enqueue(new Callback<List<FunVideo>>() {
-                    @Override
-                    public void onResponse(Call<List<FunVideo>> call, Response<List<FunVideo>> response) {
-                        Gson gson = new Gson();
-                        ArrayList<FunVideo> contributorsList = gson.fromJson(response.body().toString(), new TypeToken<List<FunVideo>>(){}.getType());
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<FunVideo>> call, Throwable t) {
-
-                    }
-                });
+    private void initView() {
+        mListViewMian = (ListView) findViewById(R.id.listview_mian);
     }
+
+    private void initData() {
+        listMina.add("Okhttp");
+        listMina.add("Retrofit");
+        mListViewMian.setAdapter(new GeneralAdapter(this, listMina));
+    }
+
+    private void listener() {
+        mListViewMian.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i) {
+                    case 0:
+                        ActivityBuilder.toOkHttpActivity(NetWorkActivity.this);
+                        break;
+                    case 1:
+                        break;
+                }
+            }
+        });
+    }
+
 }

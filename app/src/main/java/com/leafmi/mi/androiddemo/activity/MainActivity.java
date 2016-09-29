@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i) {
                     case 0:
+                        ActivityBuilder.toNetWorkActivity(MainActivity.this);
                         break;
                     case 1:
                         break;

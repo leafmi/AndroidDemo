@@ -47,8 +47,8 @@ public class RetrofitHelper {
      */
     private static void initOkHttpClient() {
 
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+//        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         if (mOkHttpClient == null) {
             synchronized (RetrofitHelper.class) {
                 if (mOkHttpClient == null) {
@@ -58,7 +58,7 @@ public class RetrofitHelper {
 
                     mOkHttpClient = new OkHttpClient.Builder()
                             .cache(cache)
-                            .addInterceptor(interceptor)
+//                            .addInterceptor(interceptor)
                             .retryOnConnectionFailure(true)
                             .connectTimeout(30, TimeUnit.SECONDS)
                             .writeTimeout(20, TimeUnit.SECONDS)

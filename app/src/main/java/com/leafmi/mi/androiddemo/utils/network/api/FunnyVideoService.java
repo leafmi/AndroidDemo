@@ -2,9 +2,7 @@ package com.leafmi.mi.androiddemo.utils.network.api;
 
 import com.leafmi.mi.androiddemo.bean.network.FunVideo;
 
-import java.util.List;
-
-import retrofit.http.GET;
+import retrofit2.http.GET;
 import retrofit2.Call;
 import retrofit2.http.Path;
 
@@ -13,7 +11,7 @@ import retrofit2.http.Path;
  */
 public interface FunnyVideoService {
     @GET("v1/data/搞笑视频/{page}/{size}")
-    Call<List<FunVideo>> getFunnyVideoCall(
-            @Path("page") String page,
-            @Path("size") String size);
+    Call<FunVideo> getFunnyVideoCall(
+            @Path("page") int page,
+            @Path("size") int size);
 }
