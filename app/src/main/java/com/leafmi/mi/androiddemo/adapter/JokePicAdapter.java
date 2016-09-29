@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.leafmi.mi.androiddemo.R;
 import com.leafmi.mi.androiddemo.bean.network.JokePic;
 
@@ -47,7 +49,9 @@ public class JokePicAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_joke_pic, parent, false);
         }
         ViewHolder.<TextView>get(convertView, R.id.title).setText(jokePic.get(position).getTitle());
-//        ViewHolder.<TextView>get(convertView, R.id.img).setText(jokePic.get(position).getImg());
+        Glide.with(mContext)
+                .load(jokePic.get(position).getImg())
+                .into(ViewHolder.<ImageView>get(convertView, R.id.img));
         return convertView;
     }
 
