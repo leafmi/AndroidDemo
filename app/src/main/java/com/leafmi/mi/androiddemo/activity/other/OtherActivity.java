@@ -33,6 +33,7 @@ public class OtherActivity extends AppCompatActivity {
 
     private void initData() {
         listOther.add("CurveChart");
+        listOther.add("RxJava");
 
         mListViewOther.setAdapter(new GeneralAdapter(this, listOther));
     }
@@ -44,6 +45,9 @@ public class OtherActivity extends AppCompatActivity {
                 switch (i) {
                     case 0:
                         ActivityBuilder.toCurveChartActivity(OtherActivity.this);
+                        break;
+                    case 1:
+                        ActivityBuilder.toRxJavaActivity(OtherActivity.this);
                         break;
                 }
             }

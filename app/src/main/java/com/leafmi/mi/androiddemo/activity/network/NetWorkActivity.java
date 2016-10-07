@@ -59,6 +59,7 @@ public class NetWorkActivity extends AppCompatActivity {
                         ActivityBuilder.toOkHttpActivity(NetWorkActivity.this);
                         break;
                     case 1:
+                        ActivityBuilder.toRetorfitActivity(NetWorkActivity.this);
                         break;
                 }
             }

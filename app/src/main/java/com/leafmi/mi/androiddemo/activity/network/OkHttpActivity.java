@@ -70,7 +70,7 @@ public class OkHttpActivity extends AppCompatActivity {
     private void getData(int page) {
         Request request = new Request.Builder()
                 .addHeader("apiKey", apiKey)
-                .url(baseUrl + "?" + page)
+                .url(baseUrl + "?page=" + page)
                 .build();
         okHttpClient.newCall(request)
                 .enqueue(new Callback() {

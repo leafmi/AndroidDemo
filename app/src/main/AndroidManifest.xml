@@ -23,7 +23,8 @@
         <activity android:name=".activity.flash.FlashActivity" />
         <activity android:name=".activity.network.NetWorkActivity" />
         <activity android:name=".activity.network.OkHttpActivity" />
-        <activity android:name=".activity.network.RetorfitActivity"></activity>
+        <activity android:name=".activity.network.RetorfitActivity" />
+        <activity android:name=".activity.other.RxJavaActivity"></activity>
     </application>
 
 </manifest>
