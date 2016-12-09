@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
         listMina.add("Image");
         listMina.add("Animation");
         listMina.add("Other");
-        listMina.add("Flash");
+        listMina.add("View");
+        listMina.add("Support library");
 
         mListViewMian.setAdapter(new GeneralAdapter(this, listMina));
     }
@@ -52,12 +53,16 @@ public class MainActivity extends AppCompatActivity {
                     case 1:
                         break;
                     case 2:
+                        ActivityBuilder.toAnimationActivity(MainActivity.this);
                         break;
                     case 3:
                         ActivityBuilder.toOtherActivity(MainActivity.this);
                         break;
                     case 4:
-                        ActivityBuilder.toFlashActivity(MainActivity.this);
+                        ActivityBuilder.toViewActivity(MainActivity.this);
+                        break;
+                    case 5:
+                        ActivityBuilder.toSupportLibraryActivity(MainActivity.this);
                         break;
                 }
             }

@@ -4,11 +4,15 @@ import com.leafmi.mi.androiddemo.LeafmiApplication;
 import com.leafmi.mi.androiddemo.utils.network.api.FunnyVideoService;
 
 import java.io.File;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -68,6 +72,4 @@ public class RetrofitHelper {
             }
         }
     }
-
-
 }

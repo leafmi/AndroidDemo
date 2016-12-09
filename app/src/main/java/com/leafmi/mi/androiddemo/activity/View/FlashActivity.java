@@ -1,4 +1,4 @@
-package com.leafmi.mi.androiddemo.activity.flash;
+package com.leafmi.mi.androiddemo.activity.View;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

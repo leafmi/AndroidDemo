@@ -20,11 +20,17 @@
         </activity>
         <activity android:name=".activity.other.OtherActivity" />
         <activity android:name=".activity.other.CurveChartActivity" />
-        <activity android:name=".activity.flash.FlashActivity" />
+        <activity android:name=".activity.view.ViewActivity" />
         <activity android:name=".activity.network.NetWorkActivity" />
         <activity android:name=".activity.network.OkHttpActivity" />
         <activity android:name=".activity.network.RetorfitActivity" />
-        <activity android:name=".activity.other.RxJavaActivity"></activity>
+        <activity android:name=".activity.other.RxJavaActivity" />
+        <activity android:name=".activity.animation.AnimationActivity" />
+        <activity android:name=".activity.animation.DownLoadViewActivity" />
+        <activity android:name=".activity.supportlibrary.SupportLibraryActivity" />
+        <activity android:name=".activity.BaseActivity" />
+        <activity android:name=".activity.supportlibrary.CoordinatorLayoutActivity" />
+        <activity android:name=".activity.view.RoundViewActivity"></activity>
     </application>
 
 </manifest>
