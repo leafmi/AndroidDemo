@@ -47,28 +47,4 @@ public class GeneralAdapter extends BaseAdapter {
         ViewHolder.<TextView>get(view, R.id.tv_item_name).setText(list.get(i));
         return view;
     }
-
-
-    public static class ViewHolder {
-        private static final int TAG_KEY = 0x7f000000;//viewHolder cache key
-
-        @SuppressWarnings("unchecked")
-        public static <T extends View> T get(View view, int id) {
-            //we use view.getTag(int key) for cache, so we can use getTag() for other use
-            SparseArray<View> viewHolder = (SparseArray<View>) view.getTag(TAG_KEY);
-            if (viewHolder == null) {
-                viewHolder = new SparseArray<>();
-                view.setTag(TAG_KEY, viewHolder);
-            }
-
-            View childView = viewHolder.get(id);
-            if (childView == null) {
-                childView = view.findViewById(id);
-                viewHolder.put(id, childView);
-            }
-
-            return (T) childView;
-        }
-    }
-
 }

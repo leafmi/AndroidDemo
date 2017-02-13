@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.leafmi.mi.androiddemo.R;
@@ -94,8 +95,57 @@ public class RoundView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        mWidth = getMeasuredWidth();
-        mHeight = getMeasuredHeight();
+//        mWidth = getMeasuredWidth();
+//        mHeight = getMeasuredHeight();
+        mWidth = MeasureSpec.getSize(widthMeasureSpec);
+        mHeight = MeasureSpec.getSize(heightMeasureSpec);
+
+
+        Log.d("TAG_HEIGHT", mHeight + "");
+
+
+
+        int desiredWidth = 0;
+        int desiredHeight = 0;
+
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+        int width;
+        int height;
+
+        //Measure Width
+        if (widthMode == MeasureSpec.EXACTLY) {
+            //Must be this size
+            width = widthSize;
+        } else if (widthMode == MeasureSpec.AT_MOST) {
+            //Can't be bigger than...
+            width = Math.min(desiredWidth, widthSize);
+        } else {
+            //Be whatever you want
+
+            width = desiredWidth;
+        }
+
+        //Measure Height
+        if (heightMode == MeasureSpec.EXACTLY) {
+            //Must be this size
+            height = heightSize;
+        } else if (heightMode == MeasureSpec.AT_MOST) {
+            //Can't be bigger than...
+            height = Math.min(desiredHeight, heightSize);
+        } else {
+            //Be whatever you want
+            height = desiredHeight;
+        }
+
+        //MUST CALL THIS
+        setMeasuredDimension(width, height);
+
+
+
 
         if (mRound != 0) {
             roundRetcF();
@@ -105,6 +155,8 @@ public class RoundView extends View {
             bottomRightRetcF();
             bottomLeftRetcF();
         }
+
+
 
     }
 
